@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { StoreService } from './services/store.service';
+import { HttpClient } from '@angular/common/http'
+import { StoreService, selectors, actionTypes } from './services/store.service';
+import { BackendService } from './services/backend.service';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +12,16 @@ export class AppComponent implements OnInit {
   title = 'app';
 
   constructor(
-    private store: StoreService
+    private store: StoreService,
+    private backend: BackendService
   ) {}
 
   ngOnInit(): void {
-    console.log(this.store.select('pizzas'));
+    this.store.dispatch(actionTypes.addOrder, {id: "test"})
+    console.log(this.store.select(selectors.orders));
+
+    this.backend.backendGet().subscribe(data => {
+      console.log(data);
+    });
   }
 }
