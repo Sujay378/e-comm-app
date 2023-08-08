@@ -1,8 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
+import { CoreComponent } from './core/core.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
-const routes: Routes = [];
+import { contentResolver } from './resolvers'
+
+const routes: Routes = [
+  { path: '', resolve: { contentResolver }, component: CoreComponent, children: []},
+  { path: 'pagenotfound', component: PageNotFoundComponent }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
