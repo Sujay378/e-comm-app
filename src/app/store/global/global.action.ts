@@ -10,7 +10,7 @@ export const appProcessing = createAction(
   props<{payload: boolean}>()
 );
 
-export const isContentLoaded = createAction(
+export const updateContentLoaded = createAction(
   globalActions.updateContentLoaded,
   props<{payload: boolean}>()
 )
