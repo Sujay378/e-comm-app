@@ -13,7 +13,7 @@ export const globalReducer = createReducer(
   on(fromGlobalActions.appProcessing, (state, action) => {
     return {...state, isAppProcessing: action.payload}
   }),
-  on(fromGlobalActions.isContentLoaded, (state, action) => {
+  on(fromGlobalActions.updateContentLoaded, (state, action) => {
     return { ...state, contentLoaded: action.payload }
   })
 )
