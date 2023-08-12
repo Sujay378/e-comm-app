@@ -18,6 +18,7 @@ export const userReducer = createReducer(
   on(loadUser, (state, action) => {
     return {
       ...state,
+      logged: true,
       user: action.payload
     };
   }),

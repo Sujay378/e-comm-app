@@ -5,6 +5,10 @@ export const config = {
   apis: {
     content : {
       global: 'content'
+    },
+    auth: {
+      login: 'auth/login',
+      register: 'auth/register'
     }
   }
 }
