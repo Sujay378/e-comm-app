@@ -1,10 +1,11 @@
 const fs = require('fs');
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
-const uniqid = require('uniqid')
-const User = require('../models/userModel');
+const uniqid = require('uniqid');
 
-const getKey = () => fs.readFileSync('./proxy-server/secret.txt');
+const User = require('../models/userModel');
+const { getKey } = require('../util')
+
 
 router.post('/register', (req, res) => {
   const { name, email, password, admin } = req.body;
@@ -54,12 +55,17 @@ router.post('/login', (req, res) => {
           type: "keygenFailed",
           message: "key generation failed"
         }).end();
-        res.status(200).json({ ...user, token }).end();
+        const userData = {
+          name: user.name,
+          email: user.email,
+          admin: user.admin
+        }
+        res.status(200).json({ ...userData, token }).end();
       });
     } else res.status(400).json({
       type: "invalidCredentials",
       message: "Password mismatch"
-    })
+    }).end();
   });
 })
 

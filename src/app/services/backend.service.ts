@@ -22,25 +22,25 @@ export class BackendService {
     return `${protocol}://${host}/${apiPath}${query ? this.queryToString(query) : ''}`
   }
 
-  private get getGlobalHeaders(): HttpHeaders {
-    return new HttpHeaders({
+  private get getGlobalHeaders() {
+    return {
       appName: 'e-comm-app'
-    });
+    };
   }
 
   backendGet(url: string, extraHeaders?: object) {
-    const headers = new HttpHeaders({
+    const headers = {
       ...this.getGlobalHeaders,
       ...extraHeaders
-    });
+    };
     return this.http.get(url, { headers });
   }
 
   backendPost(url: string, payload: object, extraHeaders?: object) {
-    const headers = new HttpHeaders({
+    const headers = {
       ...this.getGlobalHeaders,
       ...extraHeaders
-    });
+    };
     return this.http.post(url, payload, { headers })
   }
 

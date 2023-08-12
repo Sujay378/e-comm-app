@@ -1,8 +1,21 @@
 export interface AppState {
-  global: globalState
+  global: GlobalState,
+  user: UserState
 }
 
-export interface globalState {
+export interface GlobalState {
   isAppProcessing: boolean,
   contentLoaded: boolean
+}
+
+export interface UserState {
+  logged: boolean,
+  user: User
+}
+
+export interface User {
+  name: string,
+  email: string,
+  admin: boolean,
+  token: string
 }
