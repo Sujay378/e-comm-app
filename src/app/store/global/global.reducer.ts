@@ -1,9 +1,9 @@
 import { createReducer, on } from "@ngrx/store";
 
-import { globalState } from "src/app/models/state.model";
+import { GlobalState } from "src/app/models/state.model";
 import * as fromGlobalActions from './global.action';
 
-const initialState: globalState = {
+const initialState: GlobalState = {
   isAppProcessing: false,
   contentLoaded: false
 }
