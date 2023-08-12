@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { config } from "../../environment/environment.dev";
 
@@ -10,7 +10,7 @@ export class BackendService {
     private http: HttpClient
   ) {}
 
-  private toString(obj: object): string {
+  private queryToString(obj: object): string {
     return Object.keys(obj)
     .reduce((acc, key, index, arr) => acc += `${key}=${obj[key]}${index+1 < arr.length ? '&' : ''}`, '?')
   }
@@ -19,12 +19,29 @@ export class BackendService {
     const protocol = config.protocol;
     const host = config.host;
     const apiPath = config.apis[service][path];
-    return `${protocol}://${host}/${apiPath}${query ? this.toString(query) : ''}`
+    return `${protocol}://${host}/${apiPath}${query ? this.queryToString(query) : ''}`
   }
 
-  backendGet(url: string) {
-    console.log(url)
-    return this.http.get(url);
+  private get getGlobalHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      appName: 'e-comm-app'
+    });
+  }
+
+  backendGet(url: string, extraHeaders?: object) {
+    const headers = new HttpHeaders({
+      ...this.getGlobalHeaders,
+      ...extraHeaders
+    });
+    return this.http.get(url, { headers });
+  }
+
+  backendPost(url: string, payload: object, extraHeaders?: object) {
+    const headers = new HttpHeaders({
+      ...this.getGlobalHeaders,
+      ...extraHeaders
+    });
+    return this.http.post(url, payload, { headers })
   }
 
   getGlobalContent() {
