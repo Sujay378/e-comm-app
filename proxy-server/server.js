@@ -9,7 +9,9 @@ const http = require('http');
 //Custom middleware/utiliy imports
 const contSvc = require('./services/contentSvc');
 const authSvc = require('./services/authSvc');
-const { getEnvPath } = require('./helpers/getFilePath')
+const sessionSvc = require('./services/sessionSvc');
+const e2eSvc = require('./services/e2eSvc');
+const { getEnvPath } = require('./helpers/getFilePath');
 
 //Adding Environment variables to Process env
 require('dotenv').config({ path: getEnvPath() })
@@ -20,9 +22,18 @@ app.use(cors());
 app.use(bodyParder.urlencoded({extended: false}));
 app.use(bodyParder.json());
 
+app.use((req, res, next) => {
+  Object.keys(req.headers).forEach(header => res.setHeader(header, req.get(header)));
+  next();
+})
+
 app.use('/content', contSvc);
 
 app.use('/auth', authSvc);
+
+app.use('/session', sessionSvc);
+
+app.use('/encryption', e2eSvc);
 
 const server = http.createServer(app);
 

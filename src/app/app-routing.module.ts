@@ -3,10 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { CoreComponent } from './core/core.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
-import { contentResolver } from './resolvers'
+import { appResolver } from './resolvers'
 
 const routes: Routes = [
-  { path: '', resolve: { contentResolver }, component: CoreComponent, children: []},
+  { path: '', resolve: { appResolver }, component: CoreComponent, children: []},
   { path: 'pagenotfound', component: PageNotFoundComponent }
 ];
 

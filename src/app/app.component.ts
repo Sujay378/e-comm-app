@@ -1,11 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
-import { Store } from '@ngrx/store';
-
-import { StoreService, selectors, actionTypes } from './services/store.service';
-import { BackendService } from './services/backend.service';
-import { appProcessing, isAppProcessing } from './store';
-import { AppState } from './models/state.model';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { BackendService, ConfigService } from './services';
 
 @Component({
   selector: 'app-root',
@@ -14,12 +8,16 @@ import { AppState } from './models/state.model';
 })
 export class AppComponent implements OnInit {
   constructor(
-    private store: StoreService,
-    private backend: BackendService,
-    private _store: Store<AppState>
+    private backend: BackendService
   ) {}
 
   ngOnInit(): void {
+    window.addEventListener('beforeunload', this.endSession.bind(this));
+  }
 
+  endSession(event: Event) {
+    event.preventDefault();
+    const url = this.backend.getURL('session', 'end', {sessionid: ConfigService.get('sessionId')});
+    navigator.sendBeacon(url);
   }
 }
