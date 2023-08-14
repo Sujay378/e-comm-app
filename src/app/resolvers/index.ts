@@ -1,1 +1,1 @@
-export * from './content.resolver';
+export * from './app.resolver';

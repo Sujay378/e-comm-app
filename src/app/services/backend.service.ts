@@ -1,6 +1,8 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { config } from "../../environment/environment.dev";
+import { appConfig } from "../../environment/environment.dev";
+import { Login, Register } from "../models/generic.model";
+import { ConfigService } from "./";
 
 @Injectable({
   providedIn: 'root'
@@ -15,37 +17,47 @@ export class BackendService {
     .reduce((acc, key, index, arr) => acc += `${key}=${obj[key]}${index+1 < arr.length ? '&' : ''}`, '?')
   }
 
-  private getURL(service: string, path: string, query?: object): string {
-    const protocol = config.protocol;
-    const host = config.host;
-    const apiPath = config.apis[service][path];
+  getURL(service: string, path: string, query?: object): string {
+    const protocol = appConfig.protocol;
+    const host = appConfig.host;
+    const apiPath = appConfig.apis[service][path];
     return `${protocol}://${host}/${apiPath}${query ? this.queryToString(query) : ''}`
   }
 
-  private get getGlobalHeaders(): HttpHeaders {
-    return new HttpHeaders({
-      appName: 'e-comm-app'
-    });
+  private get getGlobalHeaders() {
+    return {
+      appName: 'e-comm-app',
+      ...(ConfigService.get('sessionId') ? {sessionid: ConfigService.get('sessionId')} : {})
+    };
   }
 
-  backendGet(url: string, extraHeaders?: object) {
-    const headers = new HttpHeaders({
+  backendGet(service: string,path: string, extraHeaders?: object) {
+    const url = this.getURL(service, path);
+    const headers = {
       ...this.getGlobalHeaders,
       ...extraHeaders
-    });
+    };
     return this.http.get(url, { headers });
   }
 
-  backendPost(url: string, payload: object, extraHeaders?: object) {
-    const headers = new HttpHeaders({
+  backendPost(service: string,path: string, payload: object, extraHeaders?: object) {
+    const url = this.getURL(service, path);
+    const headers = {
       ...this.getGlobalHeaders,
       ...extraHeaders
-    });
+    };
     return this.http.post(url, payload, { headers })
   }
 
   getGlobalContent() {
-    const url = this.getURL('content', 'global');
-    return this.backendGet(url);
+    return this.backendGet('content', 'global');
+  }
+
+  generateSession() {
+    return this.backendGet('session', 'generate');
+  }
+
+  endSession() {
+    return this.backendPost('session', 'end', { sessionid: ConfigService.get('sessionId') });
   }
 }
