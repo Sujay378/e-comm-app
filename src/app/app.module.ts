@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
+import { ModalComponent } from './shared/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { MatCardModule } from '@angular/material/card';
     NavbarComponent,
     CoreComponent,
     PageNotFoundComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,

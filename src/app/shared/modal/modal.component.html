@@ -1,0 +1,16 @@
+<div class="custom-modal-container" [ngClass]="{'hidden': !showModal}">
+  <div class="overlay" (click)="close()"></div>
+  <div class="custom-modal">
+    <div class="custom-modal-header" [ngStyle]="{'justify-content': params.header ? 'space-between' : 'flex-end'}">
+      <div class="modal-header__text" [innerText]="params.header" *ngIf="params.header"></div>
+      <div class="modal-header__icon" *ngIf="params.icon" (click)="close()">x</div>
+    </div>
+    <div class="custom-modal-body">
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Asperiores facere delectus ea nisi id sed repellat veritatis deleniti minima. Ipsa dolorum dolor laboriosam perspiciatis ut.
+    </div>
+    <div class="custom-modal-footer">
+      <button class="btn btn-primary" (click)="primaryClicked()">LOGIN</button>
+      <button class="btn btn-primary" (click)="secondaryClicked()">CANCEL</button>
+    </div>
+  </div>
+</div>

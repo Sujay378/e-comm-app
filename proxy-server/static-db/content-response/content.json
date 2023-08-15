@@ -2,6 +2,10 @@
   "copies": {
     "dashboard": {
       "pageHeader": "My App"
+    },
+    "modal": {
+      "default-header": "Header",
+      "default-body": ""
     }
   }
 }

@@ -1,8 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { appConfig } from "../../environment/environment.dev";
-import { Login, Register } from "../models/generic.model";
 import { ConfigService } from "./";
+import { map } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -27,26 +27,43 @@ export class BackendService {
   private get getGlobalHeaders() {
     return {
       appName: 'e-comm-app',
-      ...(ConfigService.get('sessionId') ? {sessionid: ConfigService.get('sessionId')} : {})
+      ...(ConfigService.get('sessionId') ? {sessionid: ConfigService.get('sessionId')} : {}),
+      ...(ConfigService.get('authorize') ? {authorize: ConfigService.get('authorize')} : {})
     };
   }
 
-  backendGet(service: string,path: string, extraHeaders?: object) {
+  backendGet(service: string, path: string, extraHeaders?: object, fullResponse: boolean = false) {
     const url = this.getURL(service, path);
     const headers = {
       ...this.getGlobalHeaders,
       ...extraHeaders
     };
-    return this.http.get(url, { headers });
+
+    return this.http.get(url, { headers, observe: 'response' }).pipe(
+      map(value => {
+        const { headers, body } = value;
+        ConfigService.set('authorize', headers.get('authorize'));
+
+        return fullResponse ? value : body;
+      })
+    );
   }
 
-  backendPost(service: string,path: string, payload: object, extraHeaders?: object) {
+  backendPost(service: string, path: string, payload: object, extraHeaders?: object, fullResponse: boolean = false) {
     const url = this.getURL(service, path);
     const headers = {
       ...this.getGlobalHeaders,
       ...extraHeaders
     };
-    return this.http.post(url, payload, { headers })
+
+    return this.http.post(url, payload, { headers, observe: 'response' }).pipe(
+      map(value => {
+        const { headers, body } = value;
+        ConfigService.set('authorize', headers.get('authorize'));
+
+        return fullResponse ? value : body;
+      })
+    )
   }
 
   getGlobalContent() {
@@ -55,9 +72,5 @@ export class BackendService {
 
   generateSession() {
     return this.backendGet('session', 'generate');
-  }
-
-  endSession() {
-    return this.backendPost('session', 'end', { sessionid: ConfigService.get('sessionId') });
   }
 }
