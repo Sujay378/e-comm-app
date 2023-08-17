@@ -10,7 +10,7 @@ router.get('/generate', (req, res) => {
 })
 
 router.post('/end', (req, res) => {
-  const { sessionid } = req.query;
+  const { sessionid } = req.headers;
   Session.removeSession(sessionid);
   res.status(200).json({message: 'Session ended'}).end();
 })
