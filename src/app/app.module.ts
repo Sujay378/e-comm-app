@@ -32,8 +32,6 @@ import { ModalComponent } from './shared/modal/modal.component';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatCardModule
-
-  
   ],
   providers: [],
   bootstrap: [AppComponent]

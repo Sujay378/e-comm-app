@@ -1,19 +1,16 @@
 <nav class="navbar">
-  <h1><a routerLink="">E-COMM-APP</a> </h1>
-  <div class="logo">
+  <div class="brand">Ecommerce App</div>
+  <div class="topnav" id="myTopnav">
+    <a routerLink="" class="menu-item">Home</a>
+    <a routerLink="" class="menu-item">About</a>
+    <a routerLink="" class="menu-item">Menu</a>
   </div>
-  <div class="navbar">
-    <a routerLink="">Home</a>
-    <a routerLink="">About</a>
-    <a routerLink="">Menu</a>
-    </div>
-    <div class="search-bar">
-      <input type="text" placeholder="Search" />
-      <button>Search</button>
-    </div>
-  <div class="nav-links">
-    <a routerLink="/login" routerLinkActive="active">Login</a>
-    <a routerLink="/signup" routerLinkActive="active">Signup</a>
-    <button mat-button (click)="logout()" *ngIf="isLoggedIn">Logout</button>
+  <div class="search-bar">
+    <input type="text" placeholder="Search...">
+    <button class="search-btn">Search</button>
+  </div>
+  <div class="user-actions">
+    <button class="signup-btn">Signup</button>
   </div>
 </nav>
+
