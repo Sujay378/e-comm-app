@@ -10,6 +10,7 @@ export class NavbarComponent {
   username: string = '';
   password: string = '';
 
+
   login() {
     if (this.username === 'user' && this.password === 'pass') {
       this.isLoggedIn = true;
