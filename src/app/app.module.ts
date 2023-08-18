@@ -13,6 +13,8 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
+import { RouterModule } from '@angular/router';
+
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { MatCardModule } from '@angular/material/card';
     FormsModule,
     BrowserAnimationsModule,
     MatToolbarModule,
-    MatCardModule
+    MatCardModule,
+    RouterModule.forRoot([]),
+
 
   
   ],
