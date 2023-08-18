@@ -2,4 +2,12 @@
 <router-outlet></router-outlet>
 <button class="btn btn-primary" (click)="openModal()">Open Modal</button>
 <app-modal></app-modal>
-
+<ngx-spinner
+  bdColor="rgba(214, 214, 212, 1)"
+  type="ball-spin"
+  [size]="'medium'"
+  color="#595957"
+  [fullScreen]="true"
+>
+  <p style="font-size: 20px; color: #595957;"> Loading... </p>
+</ngx-spinner>

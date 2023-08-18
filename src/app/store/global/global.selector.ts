@@ -8,6 +8,11 @@ export const isAppProcessing = createSelector(
   (state: GlobalState) => state.isAppProcessing
 )
 
+export const isViewLoading = createSelector(
+  globalSelector,
+  (state: GlobalState) => state.isViewLoading
+)
+
 export const isContentLoaded = createSelector(
   globalSelector,
   (state: GlobalState) => state.contentLoaded

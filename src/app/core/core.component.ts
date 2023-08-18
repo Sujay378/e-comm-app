@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ContentService } from '../services';
 import { ModalService } from '../shared/modal/modal.service';
 import { Modal } from '../models/generic.model';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Store } from '@ngrx/store';
+import { AppState } from '../models/state.model';
+import { isViewLoading, updateViewLoading } from '../store';
 
 @Component({
   selector: 'app-core',
@@ -11,12 +14,26 @@ import { Modal } from '../models/generic.model';
 export class CoreComponent implements OnInit {
 
   constructor(
-    private contentService: ContentService,
-    private _modalService: ModalService
+    private _modalService: ModalService,
+    private _spinnerService: NgxSpinnerService,
+    private _store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
-    console.log(this.contentService.globalContents());
+    this._store.select(isViewLoading).subscribe(isViewLoading => {
+      if(isViewLoading) this._spinnerService.show();
+      else this._spinnerService.hide();
+    })
+
+    //Dipatch actions same as shown below to show or hide spinner
+    //Uncomment below code to see spinner working demo
+    // setTimeout(() => {
+    //   this._store.dispatch(updateViewLoading({payload: true}))
+    // }, 3000)
+
+    // setTimeout(() => {
+    //   this._store.dispatch(updateViewLoading({payload: false}))
+    // },6000)
   }
 
   openModal() {
