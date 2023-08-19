@@ -1,5 +1,6 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { BackendService, ConfigService } from './services';
+import { FetchBackend, HttpClient, HttpContext } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,12 @@ export class AppComponent implements OnInit {
   endSession(event: Event) {
     event.preventDefault();
     const url = this.backend.getURL('session', 'end', {sessionid: ConfigService.get('sessionId')});
-    navigator.sendBeacon(url);
+    fetch(url, {
+      headers: {
+        sessionid: ConfigService.get('sessionId')
+      },
+      method: 'POST',
+      keepalive: true,
+    })
   }
 }

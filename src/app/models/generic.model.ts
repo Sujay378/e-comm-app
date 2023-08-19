@@ -13,3 +13,13 @@ export interface Register {
   email: string,
   password: string,
 }
+
+export interface Modal {
+  header?: string;
+  icon?: boolean;
+  body?: string;
+  primaryButton?: string;
+  secondaryButton?: string;
+  primaryCallback?: () => void;
+  secondaryCallback?: () => void;
+}

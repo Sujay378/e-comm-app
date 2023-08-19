@@ -4,6 +4,7 @@ export interface AppState {
 }
 
 export interface GlobalState {
+  isViewLoading: boolean,
   isAppProcessing: boolean,
   contentLoaded: boolean
 }

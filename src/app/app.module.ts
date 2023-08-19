@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store'
@@ -13,8 +13,8 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
-import { RouterModule } from '@angular/router';
-
+import { ModalComponent } from './shared/modal/modal.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -22,6 +22,7 @@ import { RouterModule } from '@angular/router';
     NavbarComponent,
     CoreComponent,
     PageNotFoundComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,12 +33,10 @@ import { RouterModule } from '@angular/router';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatCardModule,
-    RouterModule.forRoot([]),
-
-
-  
+    NgxSpinnerModule
   ],
   providers: [],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
