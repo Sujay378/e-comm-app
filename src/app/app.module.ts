@@ -15,6 +15,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { ModalComponent } from './shared/modal/modal.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     CoreComponent,
     PageNotFoundComponent,
     ModalComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
