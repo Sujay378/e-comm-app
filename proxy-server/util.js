@@ -1,16 +1,16 @@
 const main = require.main;
-const fs = require('fs');
 const cryptoJs = require('crypto-js');
-const passphrase = require('generate-passphrase');
+const otpGenerator = require('otp-generator');
 
 const getRootDir = () => main.path;
 
-const getKey = () => fs.readFileSync('./proxy-server/secret.txt');
+const generateKey = () => cryptoJs.lib.WordArray.random(16).toString();
 
-const generateKey = () => cryptoJs.PBKDF2(
-  passphrase.generate({ length: 8, separator: '.', titlecase: true, numbers: true, uppercase: true }),
-  cryptoJs.lib.WordArray.random(256/32),
-  { keySize: 8, iterations: 5 }
-).toString();
+const generateOTP = () => otpGenerator.generate(6, {
+  lowerCaseAlphabets: false,
+  specialChars: false,
+  upperCaseAlphabets: false,
+  digits: true
+});
 
-module.exports = { getRootDir, getKey, generateKey };
+module.exports = { getRootDir, generateKey, generateOTP };
